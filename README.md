@@ -1,0 +1,24 @@
+# JSON DSL
+
+> Declarative JSON builder widgets for TiddlyWiki
+
+Compose JSON structures using widget syntax instead of string manipulation.
+
+## Key features
+
+* **Composable widget set** -- `<$json-obj>`, `<$json-array>`, `<$json-prop>`, `<$json-val>`, `<$json-item>`
+* **Output widgets** -- emit to tiddler field (`<$json-save>`) or action variable (`<$json-emit>`)
+* **Debug widget** -- `<$json-debug>` for inspecting output during development
+* **Widget tree integration** -- seamless integration with TiddlyWiki's widget tree and filter expressions
+
+## Prerequisites
+
+No external prerequisites.
+
+## Quick start
+
+Build JSON declaratively: `<$json-obj><$json-prop name="key"><$json-val value="hello"/></$json-prop></$json-obj>`. Use `<$json-emit>` to output the result.
+
+## License
+
+MIT -- see [LICENSE.md](LICENSE.md)
