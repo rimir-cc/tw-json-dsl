@@ -19,6 +19,14 @@ No external prerequisites.
 
 Build JSON declaratively: `<$json-obj><$json-prop name="key"><$json-val value="hello"/></$json-prop></$json-obj>`. Use `<$json-emit>` to output the result.
 
+## Plugin Library
+
+Install from the [rimir plugin library](https://rimir-cc.github.io/tw-plugin-library/) via *Control Panel → Plugins → Get more plugins*.
+
+## Demo
+
+Try this plugin in the [live demo wiki](https://rimir-cc.github.io/tw-demo/).
+
 ## License
 
 MIT -- see [LICENSE.md](LICENSE.md)
