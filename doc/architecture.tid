@@ -1,0 +1,67 @@
+created: 20260305110625328
+modified: 20260305110625328
+rdt.order: 2
+rdt.plugin-key: json-dsl
+rdt.plugin-name: json dsl
+rdt.plugin-subtitle: Declarative JSON builder widgets for TiddlyWiki
+rdt.section: Architecture
+title: $:/plugins/rimir/json-dsl/doc/architecture
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! Builder context
+
+All widgets share a `jsonBuilderContext` object that propagates down the widget tree via `parentWidget` traversal. The context contains:
+
+|!Field |!Type |!Purpose |
+|`root` |any |The top-level JSON value being built |
+|`stack` |array |Stack of "current containers" — the innermost array or object receives new values |
+|`captureStack` |array |Used by `<$json-val>` for child-capture semantics |
+|`debug` |boolean |When `true`, warnings are collected |
+|`warnings` |array |Accumulated warning messages for `<$json-debug>` |
+
+!! Widget roles
+
+|!Widget |!Creates |!Attaches to parent via |
+|`<$json-obj>` |`{}` |`key` attr (on object parent), push (on array parent), or becomes root |
+|`<$json-array>` |`[]` |Same attachment logic as `<$json-obj>` |
+|`<$json-prop>` |key/value pair |Sets property on nearest object on stack |
+|`<$json-val>` |scalar or child-captured value |Pushes to nearest array on stack, or capture-slot |
+|`<$json-item>` |coerced scalar |Pushes to nearest array on stack |
+|`<$json-emit>` |text node |Reads `ctx.root`, calls `JSON.stringify` |
+|`<$json-save>` |— (side-effect) |Reads `ctx.root`, calls `wiki.setText()` |
+|`<$json-debug>` |text node |Dumps warnings and raw tree |
+
+!! Execution flow
+
+# `<$json-obj>` or `<$json-array>` at the top level creates the context and sets `ctx.root`
+# Nested widgets call `getJsonContext(this)` to walk up the parent chain and find the context
+# Container widgets (`<$json-obj>`, `<$json-array>`) push themselves onto `ctx.stack` during `execute()` and pop in `render()`
+# Leaf widgets (`<$json-prop>`, `<$json-item>`) peek at the top of `ctx.stack` and write into it
+# Terminal widgets (`<$json-emit>`, `<$json-save>`) read `ctx.root` after the tree is fully built
+
+!! Scalar array mode
+
+When `<$json-array>` has both `filter` and `type` attributes, it enters scalar mode:
+
+* Each filter result is coerced via `coerceValue()` and pushed directly to the array
+* No child widgets are iterated — this is a performance shortcut for simple lists
+* Uses the same coercion logic as `<$json-item>`
+
+!! Design decisions
+
+* ''Stack-based context'' — avoids passing data through widget attributes; any depth of nesting works naturally
+* ''Capture semantics'' — `<$json-val>` uses a capture slot so its child can be an object or array, not just a scalar
+* ''Refresh = refreshSelf'' — JSON DSL trees are rebuilt entirely on any change, keeping the logic stateless
+* ''No DOM output from structural widgets'' — only `<$json-emit>` and `<$json-debug>` create DOM nodes
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/callout" type="warning">
+<$fill $name="body">
+The entire JSON tree is rebuilt on every refresh cycle. For very large structures, consider caching the output via `<$json-save>` into a data tiddler.
+</$fill>
+</$transclude>
+
+</$fill>
+</$transclude>

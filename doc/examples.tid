@@ -1,0 +1,96 @@
+created: 20260305110625328
+modified: 20260305110625328
+rdt.order: 3
+rdt.plugin-key: json-dsl
+rdt.plugin-name: json dsl
+rdt.plugin-subtitle: Declarative JSON builder widgets for TiddlyWiki
+rdt.section: Examples
+title: $:/plugins/rimir/json-dsl/doc/examples
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! Simple object
+
+```
+<$json-obj>
+  <$json-prop key="title" value="Hello World"/>
+  <$json-prop key="enabled" value="true" type="boolean"/>
+  <$json-emit/>
+</$json-obj>
+```
+
+Output: `{"title": "Hello World", "enabled": true}`
+
+!! Nested objects
+
+```
+<$json-obj>
+  <$json-prop key="name" value="Alice"/>
+  <$json-obj key="address">
+    <$json-prop key="city" value="Berlin"/>
+    <$json-prop key="zip" value="10115"/>
+  </$json-obj>
+  <$json-emit/>
+</$json-obj>
+```
+
+!! Array of objects from filter
+
+```
+<$json-obj>
+  <$json-array key="projects" filter="[tag[project]]">
+    <$json-obj>
+      <$json-prop key="title" filter="[<item>get[title]]"/>
+      <$json-prop key="status" filter="[<item>get[status]]"/>
+    </$json-obj>
+  </$json-array>
+  <$json-emit/>
+</$json-obj>
+```
+
+!! Scalar array (shorthand)
+
+When you just need an array of strings or numbers from a filter, use the `type` attribute directly on `<$json-array>`:
+
+```
+<$json-obj>
+  <$json-array key="tags" filter="[tag[project]]" type="string"/>
+  <$json-array key="counts" filter="[tag[project]get[count]]" type="number"/>
+  <$json-emit/>
+</$json-obj>
+```
+
+!! Save to tiddler field
+
+Use `<$json-save>` to write the built JSON into a tiddler field instead of rendering it as text:
+
+```
+<$json-obj>
+  <$json-prop key="name" value="Config"/>
+  <$json-prop key="version" value="1" type="number"/>
+  <$json-save $tiddler="MyConfig" $field="text" indent="2"/>
+</$json-obj>
+```
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/callout" type="tip">
+<$fill $name="body">
+`<$json-save>` produces no visible output. Combine it with `<$json-emit>` if you want to both save and display the JSON.
+</$fill>
+</$transclude>
+
+!! Debug mode
+
+Wrap your tree in `debug="yes"` and add `<$json-debug>` to see warnings:
+
+```
+<$json-obj debug="yes">
+  <$json-prop key="x" value="1"/>
+  <$json-prop key="x" value="2"/>
+  <$json-debug/>
+</$json-obj>
+```
+
+</$fill>
+</$transclude>

@@ -1,0 +1,150 @@
+created: 20260221095908195
+modified: 20260305110625329
+tags: 
+title: $:/plugins/rimir/json-dsl/examples/001
+type: text/vnd.tiddlywiki
+
+\whitespace trim
+<$let pg="$:/plugins/rimir/json-dsl/examples/001/data/MyProjectGroup">
+
+<$json-obj debug="yes">
+
+  <!-- 1) simple attribute-mode properties -->
+  <$json-prop key="name" filter="[<pg>get[title]]"/>
+  <$json-prop key="description" filter="[<pg>get[description]]" omit-empty="yes"/>
+  <$json-prop key="active" value="yes" type="boolean"/>
+  <$json-prop key="version" value={{{[[3]add[4]]}}} type="number"/>
+
+  <!-- 2) scalar nested body value via json-val -->
+  <$json-prop key="meta">
+    <$json-obj>
+      <$json-prop key="generatedBy" value="json-dsl test"/>
+      <$json-prop key="countHint">
+        <$json-val value="42" type="number"/>
+      </$json-prop>
+      <$json-prop key="isDemo">
+        <$json-val value="true" type="boolean"/>
+      </$json-prop>
+      <$json-prop key="nullableExample">
+        <$json-val type="null"/>
+      </$json-prop>
+    </$json-obj>
+  </$json-prop>
+
+  <!-- 3) array with direct scalar items -->
+  <$json-array key="staticTags">
+    <$json-item value="alpha"/>
+    <$json-item value="beta"/>
+    <$json-item value="3" type="number"/>
+    <$json-item value="true" type="boolean"/>
+    <$json-item type="null"/>
+    <$json-item value='{"demo":"raw-object"}' type="raw"/>
+  </$json-array>
+
+  <!-- 4) array captured as property body, using core $list -->
+  <$json-prop key="projects">
+    <$json-array>
+
+      <$list filter="[parent<pg>]" variable="project">
+
+        <$json-obj>
+          <!-- scalar props from project tiddler -->
+          <$json-prop key="title" filter="[<project>get[title]]"/>
+          <$json-prop key="id" filter="[<project>get[id]]" omit-empty="yes"/>
+
+          <!-- conditional property using TW conditional shortcut -->
+          <%if [<project>has[status]] %>
+            <$json-prop key="status" filter="[<project>get[status]]"/>
+          <%endif%>
+
+          <!-- number/bool coercion -->
+          <$json-prop key="priority" filter="[<project>get[priority]]" type="number" omit-empty="yes"/>
+          <$json-prop key="archived" filter="[<project>get[archived]]" type="boolean" omit-empty="yes"/>
+
+          <!-- nested object in property body -->
+          <$json-prop key="owner">
+            <$json-obj>
+              <$json-prop key="name" filter="[<project>get[owner]]" omit-empty="yes"/>
+              <$json-prop key="email" filter="[<project>get[owner-email]]" omit-empty="yes"/>
+            </$json-obj>
+          </$json-prop>
+
+          <!-- nested scalar body -->
+          <$json-prop key="budget">
+            <$json-val value={{{ [<project>get[budget]] }}} type="number"/>
+          </$json-prop>
+
+          <!-- nested array attached by key (json-array key=...) -->
+          <$json-array key="labels">
+            <!-- project title as one label -->
+            <$json-item value={{{ [<project>get[title]] }}}/>
+            <!-- static labels -->
+            <$json-item value="project"/>
+            <!-- raw JSON scalar/object -->
+            <$json-item value='{"kind":"label-meta"}' type="raw"/>
+          </$json-array>
+
+          <!-- nested array in property-body mode, with filter-driven loop -->
+          <$json-prop key="tasks">
+            <$json-array filter="[parent<project>]" variable="task">
+
+              <$json-obj>
+                <$json-prop key="title" filter="[<task>get[title]]"/>
+
+                <%if [<task>has[status]] %>
+                  <$json-prop key="status" filter="[<task>get[status]]"/>
+                <%endif%>
+
+                <$json-prop key="estimate" filter="[<task>get[estimate]]" type="number" omit-empty="yes"/>
+                <$json-prop key="done" filter="[<task>get[done]]" type="boolean" omit-empty="yes"/>
+
+                <!-- nested object inside task -->
+                <$json-prop key="notes">
+                  <$json-obj>
+                    <$json-prop key="summary" filter="[<task>get[summary]]" omit-empty="yes"/>
+                    <$json-prop key="details" filter="[<task>get[text]]" omit-empty="yes"/>
+                  </$json-obj>
+                </$json-prop>
+
+                <!-- nested scalar capture -->
+                <$json-prop key="rank">
+                  <$json-val value={{{ [<task>get[rank]] }}} type="number"/>
+                </$json-prop>
+
+                <!-- array of scalar items -->
+                <$json-array key="flags">
+                  <$json-item value="task"/>
+                  <%if [<task>has[status]] %>
+                    <$json-item value={{{ [<task>get[status]] }}}/>
+                  <%endif%>
+                </$json-array>
+
+              </$json-obj>
+
+            </$json-array>
+          </$json-prop>
+
+          <!-- example of raw property value -->
+          <$json-prop key="rawPayload" value='{"source":"demo","ok":true}' type="raw"/>
+
+        </$json-obj>
+
+      </$list>
+
+    </$json-array>
+  </$json-prop>
+
+  <!-- 5) final output -->
+  <$json-emit indent="2"/>
+
+  <!-- 6) debug (must be INSIDE json tree) -->
+  <!--- DEBUG (warnings) --->
+  <$json-debug mode="warnings"/>
+
+  <!----- DEBUG (full) --->
+  <$json-debug mode="full"/>
+
+</$json-obj>
+</$let>
+
+

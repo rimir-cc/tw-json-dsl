@@ -1,0 +1,89 @@
+created: 20260305110625329
+modified: 20260305110625329
+rdt.order: 4
+rdt.plugin-key: json-dsl
+rdt.plugin-name: json dsl
+rdt.plugin-subtitle: Declarative JSON builder widgets for TiddlyWiki
+rdt.section: Reference
+title: $:/plugins/rimir/json-dsl/doc/reference
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! `<$json-obj>`
+
+Creates a JSON object `{}` and pushes it onto the builder stack.
+
+|!Attribute |!Default |!Description |
+|`key` |— |Property name when nested inside another object |
+|`debug` |`"no"` |Set to `"yes"` to enable warning collection |
+
+!! `<$json-array>`
+
+Creates a JSON array `[]` and pushes it onto the builder stack.
+
+|!Attribute |!Default |!Description |
+|`key` |— |Property name when nested inside an object |
+|`filter` |— |TiddlyWiki filter; results become iteration items |
+|`type` |— |When set with `filter`: coerce results to scalar type (`string`, `number`, `boolean`, `null`, `raw`) and skip child iteration |
+|`variable` |`"item"` |Variable name for current item during iteration |
+
+!! `<$json-prop>`
+
+Sets a key/value pair on the nearest object on the stack.
+
+|!Attribute |!Default |!Description |
+|`key` |— |Property name (required) |
+|`value` |`""` |Literal value |
+|`filter` |— |TiddlyWiki filter; first result becomes the value |
+|`type` |`"string"` |Type coercion: `string`, `number`, `boolean`/`bool`, `null`, `raw` |
+|`omit-empty` |`"no"` |When `"yes"`, skip the property if value is empty string |
+
+!! `<$json-val>`
+
+Pushes a value onto the nearest array. Supports child-capture: if a child `<$json-obj>` or `<$json-array>` is nested inside, it captures that as the value.
+
+|!Attribute |!Default |!Description |
+|`value` |`""` |Literal value |
+|`type` |`"string"` |Type coercion |
+
+!! `<$json-item>`
+
+Pushes a coerced scalar onto the nearest array. Simpler than `<$json-val>` — no child capture.
+
+|!Attribute |!Default |!Description |
+|`value` |`""` |Literal value |
+|`type` |`"string"` |Type coercion |
+
+!! `<$json-emit>`
+
+Renders the built JSON tree as a text node.
+
+|!Attribute |!Default |!Description |
+|`indent` |`2` |Indentation spaces for `JSON.stringify` |
+
+!! `<$json-save>`
+
+Writes the built JSON tree into a tiddler field. Produces no DOM output.
+
+|!Attribute |!Default |!Description |
+|`$tiddler` |— |Target tiddler title (required) |
+|`$field` |`"text"` |Target field name |
+|`indent` |`2` |Indentation spaces for `JSON.stringify` |
+
+!! `<$json-debug>`
+
+Displays warnings and the raw JSON tree. Only useful when `debug="yes"` is set on the root `<$json-obj>`.
+
+!! Type coercion table
+
+|!Type value |!Behavior |
+|`string` |`String(value)` |
+|`number` |`Number(value)`, empty string becomes `null` |
+|`boolean` / `bool` |`true` for `"true"`, `"yes"`, `"1"` (case-insensitive); `false` otherwise |
+|`null` |Always `null` |
+|`raw` |`JSON.parse(value)`, falls back to raw string on parse error |
+
+</$fill>
+</$transclude>

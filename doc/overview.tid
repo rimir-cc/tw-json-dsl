@@ -1,0 +1,61 @@
+created: 20260305110625329
+modified: 20260305110625329
+rdt.hub-category: infrastructure
+rdt.hub-category-name: Infrastructure
+rdt.hub-order: 2
+rdt.order: 1
+rdt.plugin-key: json-dsl
+rdt.plugin-name: json dsl
+rdt.plugin-subtitle: Declarative JSON builder widgets for TiddlyWiki
+rdt.section: Overview
+title: $:/plugins/rimir/json-dsl/doc/overview
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! What it does
+
+JSON DSL provides a set of widgets that let you build JSON data structures declaratively in TiddlyWiki markup. Instead of hand-writing JSON strings, you compose `<$json-obj>`, `<$json-array>`, `<$json-prop>`, and other widgets — they assemble the tree at render time.
+
+!! Features
+
+* ''Declarative composition'' — nest `<$json-obj>`, `<$json-array>`, `<$json-prop>`, `<$json-val>`, and `<$json-item>` to build any JSON structure
+* ''Filter integration'' — `<$json-prop>` and `<$json-array>` accept TiddlyWiki `filter` attributes to pull values from the wiki store
+* ''Type coercion'' — `type` attribute on `<$json-prop>`, `<$json-val>`, and `<$json-item>` for `string`, `number`, `boolean`, `null`, `raw`
+* ''Scalar arrays'' — `<$json-array filter="..." type="string"/>` produces arrays of coerced scalars directly, no child widgets needed
+* ''Text output'' — `<$json-emit>` renders the assembled JSON as a text node (with configurable indent)
+* ''Field output'' — `<$json-save>` writes the assembled JSON into a tiddler field
+* ''Debug mode'' — `<$json-obj debug="yes">` enables `<$json-debug>` to display warnings and the raw tree
+
+!! Quick start
+
+Build a JSON object from tiddler fields:
+
+```
+<$json-obj>
+  <$json-prop key="name" value="My Project"/>
+  <$json-prop key="count" value="42" type="number"/>
+  <$json-array key="tags" filter="[tag[project]]" type="string"/>
+  <$json-emit indent="2"/>
+</$json-obj>
+```
+
+Output:
+
+```json
+{
+  "name": "My Project",
+  "count": 42,
+  "tags": ["ProjectA", "ProjectB"]
+}
+```
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/callout" type="info">
+<$fill $name="body">
+JSON DSL widgets are browser-side only. They build the JSON tree during render and output it as text or write it to a tiddler field.
+</$fill>
+</$transclude>
+
+</$fill>
+</$transclude>
