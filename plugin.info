@@ -1,8 +1,8 @@
 {
 	"title": "$:/plugins/rimir/json-dsl",
-	"name": "JSON DSL",
+	"name": "json dsl",
 	"description": "Declarative JSON builder widgets for TiddlyWiki",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"author": "rimir",
 	"core-version": ">=5.3.0",
 	"source": "https://github.com/rimir-cc/tw-json-dsl",
