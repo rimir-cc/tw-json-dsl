@@ -1,0 +1,17 @@
+title: $:/plugins/rimir/json-dsl/test/test-multiple-props
+description: json-obj with multiple properties preserves all keys
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-obj><$json-prop key="a" value="1"/><$json-prop key="b" value="2"/><$json-emit indent="0"/></$json-obj>
++
+title: ExpectedResult
+
+<p>{"a":"1","b":"2"}</p>
++
+title: Narrative
+
+Tests that multiple properties are preserved in the emitted JSON.

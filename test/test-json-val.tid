@@ -1,0 +1,17 @@
+title: $:/plugins/rimir/json-dsl/test/test-json-val
+description: json-val sets value on a property via capture
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-obj><$json-prop key="greeting"><$json-val value="hello"/></$json-prop><$json-emit indent="0"/></$json-obj>
++
+title: ExpectedResult
+
+<p>{"greeting":"hello"}</p>
++
+title: Narrative
+
+Tests that json-val correctly captures and assigns a string value to its parent property.

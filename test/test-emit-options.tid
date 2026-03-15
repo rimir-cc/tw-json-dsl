@@ -1,0 +1,17 @@
+title: $:/plugins/rimir/json-dsl/test/test-emit-options
+description: json-emit indent and json-prop omit-empty
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-obj><$json-prop key="present" value="val"/><$json-prop key="absent" value="" omit-empty="yes"/><$json-emit indent="0"/></$json-obj>
++
+title: ExpectedResult
+
+<p>{"present":"val"}</p>
++
+title: Narrative
+
+Tests that omit-empty="yes" suppresses empty properties and indent="0" produces compact output.

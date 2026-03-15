@@ -1,0 +1,21 @@
+title: $:/plugins/rimir/json-dsl/test/test-filter-prop
+description: json-prop resolves value from a TW filter
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: MyData
+text: content here
+
++
+title: Output
+
+\whitespace trim
+<$json-obj><$json-prop key="result" filter="[[MyData]get[text]]"/><$json-emit indent="0"/></$json-obj>
++
+title: ExpectedResult
+
+<p>{"result":"content here"}</p>
++
+title: Narrative
+
+Tests that json-prop can resolve its value from a TW filter expression reading tiddler data.

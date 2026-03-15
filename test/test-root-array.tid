@@ -1,0 +1,17 @@
+title: $:/plugins/rimir/json-dsl/test/test-root-array
+description: Root-level json-array with json-emit
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-array><$json-item value="one"/><$json-item value="two"/><$json-emit indent="0"/></$json-array>
++
+title: ExpectedResult
+
+<p>["one","two"]</p>
++
+title: Narrative
+
+Tests that a root-level array (not wrapped in json-obj) emits correctly.

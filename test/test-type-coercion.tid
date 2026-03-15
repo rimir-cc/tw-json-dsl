@@ -1,0 +1,26 @@
+title: $:/plugins/rimir/json-dsl/test/test-type-coercion
+description: json-prop and json-val type coercion (number, boolean, null, raw)
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-obj>
+<$json-prop key="num" value="42" type="number"/>
+<$json-prop key="flag" value="true" type="boolean"/>
+<$json-prop key="off" value="no" type="boolean"/>
+<$json-prop key="empty" type="null"/>
+<$json-prop key="vnum"><$json-val value="99" type="number"/></$json-prop>
+<$json-prop key="vbool"><$json-val value="yes" type="boolean"/></$json-prop>
+<$json-prop key="vnull"><$json-val type="null"/></$json-prop>
+<$json-emit indent="0"/>
+</$json-obj>
++
+title: ExpectedResult
+
+<p>{"num":42,"flag":true,"off":false,"empty":null,"vnum":99,"vbool":true,"vnull":null}</p>
++
+title: Narrative
+
+Tests type coercion for number, boolean (true/false), and null via both json-prop and json-val.

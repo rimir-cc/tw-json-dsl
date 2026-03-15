@@ -1,0 +1,17 @@
+title: $:/plugins/rimir/json-dsl/test/test-nested-obj
+description: Nested json-obj builds correct structure
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-obj><$json-prop key="outer"><$json-obj><$json-prop key="inner" value="deep"/></$json-obj></$json-prop><$json-emit indent="0"/></$json-obj>
++
+title: ExpectedResult
+
+<p>{"outer":{"inner":"deep"}}</p>
++
+title: Narrative
+
+Tests nested object building via json-prop containing a child json-obj.

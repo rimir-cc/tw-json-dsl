@@ -1,0 +1,17 @@
+title: $:/plugins/rimir/json-dsl/test/test-obj-prop-emit
+description: json-obj + json-prop + json-emit build objects correctly
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-obj><$json-prop key="name" value="Alice"/><$json-emit indent="0"/></$json-obj>
++
+title: ExpectedResult
+
+<p>{"name":"Alice"}</p>
++
+title: Narrative
+
+Tests that a simple object with one string property is built correctly.

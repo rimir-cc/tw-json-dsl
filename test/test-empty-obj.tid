@@ -1,0 +1,17 @@
+title: $:/plugins/rimir/json-dsl/test/test-empty-obj
+description: Empty json-obj emits {}
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-obj><$json-emit indent="0"/></$json-obj>
++
+title: ExpectedResult
+
+<p>{}</p>
++
+title: Narrative
+
+Tests that an empty object is emitted as {}.

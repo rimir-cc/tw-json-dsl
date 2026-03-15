@@ -1,0 +1,23 @@
+title: $:/plugins/rimir/json-dsl/test/test-array
+description: json-array builds arrays from filters and json-item
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-obj>
+<$json-prop key="strings"><$json-array filter="[[alpha]] [[beta]] [[gamma]]" type="string"/></$json-prop>
+<$json-prop key="nums"><$json-array filter="[[1]] [[2]] [[3]]" type="number"/></$json-prop>
+<$json-prop key="manual"><$json-array><$json-item value="x"/><$json-item value="y"/></$json-array></$json-prop>
+<$json-prop key="mixed"><$json-array><$json-item value="42" type="number"/><$json-item value="true" type="boolean"/><$json-item type="null"/></$json-array></$json-prop>
+<$json-emit indent="0"/>
+</$json-obj>
++
+title: ExpectedResult
+
+<p>{"strings":["alpha","beta","gamma"],"nums":[1,2,3],"manual":["x","y"],"mixed":[42,true,null]}</p>
++
+title: Narrative
+
+Tests json-array with filter (string and number types), json-item manual building, and mixed type coercion.
