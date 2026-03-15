@@ -1,0 +1,39 @@
+created: 20260315120000000
+modified: 20260315120000000
+rdt.order: 7
+rdt.plugin-key: json-dsl
+rdt.plugin-name: json dsl
+rdt.plugin-subtitle: Declarative JSON builder widgets for TiddlyWiki
+rdt.section: TW Internals
+title: $:/plugins/rimir/json-dsl/doc/tw-internals
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! Custom widget registration
+
+Each widget JS file exports via `exports["json-obj"]` (etc.), which TiddlyWiki registers as `<$json-obj>`. The `module-type: widget` tells TW to load these as widget constructors at boot.
+
+!! parentWidget traversal
+
+The `getJsonContext(widget)` helper walks up the widget tree via `widget.parentWidget` until it finds a widget that owns a `jsonBuilderContext`. This is how nested widgets find the shared builder context without passing data through attributes.
+
+!! refreshSelf pattern
+
+All JSON DSL widgets call `this.refreshSelf()` in their `refresh()` method, causing a full re-execute of the subtree. This keeps the JSON tree stateless — every render produces a fresh tree from current widget attributes and filter results.
+
+!! wiki.setText
+
+`<$json-save>` uses `$tw.wiki.setText(title, field, null, value)` to write the serialized JSON into a tiddler field. This triggers TW's change detection and reactive refresh cycle for any widgets that depend on the target tiddler.
+
+!! $tw.wiki.filterTiddlers
+
+`<$json-array>` and `<$json-prop>` accept `filter` attributes. The filter is evaluated via `$tw.wiki.filterTiddlers(filter, widget)`, where the widget reference provides the current variable scope. This means filter expressions can reference variables set by parent widgets (e.g., `$let`, `$list`).
+
+!! Widget.computeAttribute
+
+All widget attributes are resolved via TW's standard `computeAttribute` pipeline — supporting literal values, transclusions (`{{tiddler!!field}}`), macro substitutions (`<<variable>>`), and filter attributes (`{{{ [filter] }}}`).
+
+</$fill>
+</$transclude>

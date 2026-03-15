@@ -1,0 +1,27 @@
+created: 20260315120000000
+modified: 20260315120000000
+rdt.order: 6
+rdt.plugin-key: json-dsl
+rdt.plugin-name: json dsl
+rdt.plugin-subtitle: Declarative JSON builder widgets for TiddlyWiki
+rdt.section: FAQ
+title: $:/plugins/rimir/json-dsl/doc/faq
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! Q: Why does my number show up as a string in the JSON output?
+
+All values default to `type="string"`. To get a numeric value, set `type="number"` explicitly on `<$json-prop>`, `<$json-item>`, or `<$json-val>`. Example: `<$json-prop key="count" value="42" type="number"/>`.
+
+!! Q: The JSON tree is rebuilt on every refresh — will this be slow for large structures?
+
+JSON DSL widgets use `refreshSelf` — the entire tree is rebuilt on any change to keep logic stateless. For most use cases this is fast enough. If you have a very large structure (hundreds of properties), consider using `<$json-save>` to persist the result to a data tiddler and only rebuild when inputs change.
+
+!! Q: Can I use JSON DSL on the server side?
+
+No. JSON DSL widgets are browser-side only — they build the JSON tree during the TiddlyWiki render cycle and output it as DOM text nodes or via `wiki.setText()`. Server-side rendering does not execute widget `execute()` in the same way.
+
+</$fill>
+</$transclude>

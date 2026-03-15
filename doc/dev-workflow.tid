@@ -1,0 +1,43 @@
+created: 20260315120000000
+modified: 20260315120000000
+rdt.order: 5
+rdt.plugin-key: json-dsl
+rdt.plugin-name: json dsl
+rdt.plugin-subtitle: Declarative JSON builder widgets for TiddlyWiki
+rdt.section: Dev Workflow
+title: $:/plugins/rimir/json-dsl/doc/dev-workflow
+type: text/vnd.tiddlywiki
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/page">
+<$fill $name="body">
+
+!! Plugin files
+
+|!File |!Type |!Role |
+|`widgets/json-obj.js` |`widget` |`<$json-obj>` — creates JSON object, manages builder context |
+|`widgets/json-array.js` |`widget` |`<$json-array>` — creates JSON array, supports scalar mode via `filter` + `type` |
+|`widgets/json-prop.js` |`widget` |`<$json-prop>` — sets key/value on parent object |
+|`widgets/json-val.js` |`widget` |`<$json-val>` — pushes value to parent array, supports child-capture |
+|`widgets/json-item.js` |`widget` |`<$json-item>` — pushes coerced scalar to parent array |
+|`widgets/json-emit.js` |`widget` |`<$json-emit>` — renders JSON tree as text node |
+|`widgets/json-save.js` |`widget` |`<$json-save>` — writes JSON tree to tiddler field |
+|`widgets/json-debug.js` |`widget` |`<$json-debug>` — dumps warnings and raw tree |
+
+!! Restart rules
+
+|!Change |!Restart needed? |
+|Any `.js` widget file |Yes — JS modules load at boot |
+|Doc/readme `.tid` files |Yes — plugin shadow tiddlers |
+
+<$transclude $tiddler="$:/plugins/rimir/doc-template/templates/callout" type="info">
+<$fill $name="body">
+JSON DSL is entirely browser-side. "Restart" means restarting the TiddlyWiki server so the updated plugin shadow tiddlers are loaded. No server-side modules exist.
+</$fill>
+</$transclude>
+
+!! Testing
+
+Use `<$json-obj debug="yes">` with `<$json-debug/>` to see the assembled tree and any warnings. Warnings include issues like setting a property on an array or pushing a value without a parent container.
+
+</$fill>
+</$transclude>
