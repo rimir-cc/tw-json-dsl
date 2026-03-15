@@ -17,7 +17,7 @@ jobs:
         run: |
           mkdir -p /tmp/plugins/rimir/json-dsl
           cp -r . /tmp/plugins/rimir/json-dsl/
-          TIDDLYWIKI_PLUGIN_PATH=/tmp/plugins npx tiddlywiki test-edition --test spec="json-dsl"
+          TIDDLYWIKI_CLI_MODE=1 TIDDLYWIKI_PLUGIN_PATH=/tmp/plugins npx tiddlywiki test-edition --test spec="json-dsl"
 
   notify:
     needs: test
