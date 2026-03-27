@@ -25,10 +25,10 @@ All widgets share a `jsonBuilderContext` object that propagates down the widget 
 !! Widget roles
 
 |!Widget |!Creates |!Attaches to parent via |
-|`<$json-obj>` |`{}` |`key` attr (on object parent), push (on array parent), or becomes root |
-|`<$json-array>` |`[]` |Same attachment logic as `<$json-obj>` |
+|`<$json-obj>` |`{}` |Capture slot (inside `<$json-prop>`), push (on array parent), or becomes root |
+|`<$json-array>` |`[]` |`key` attr (on object parent), capture slot, push (on array parent), or becomes root |
 |`<$json-prop>` |key/value pair |Sets property on nearest object on stack |
-|`<$json-val>` |scalar or child-captured value |Pushes to nearest array on stack, or capture-slot |
+|`<$json-val>` |coerced scalar |Claims capture slot inside `<$json-prop>` child capture mode |
 |`<$json-item>` |coerced scalar |Pushes to nearest array on stack |
 |`<$json-emit>` |text node |Reads `ctx.root`, calls `JSON.stringify` |
 |`<$json-save>` |— (side-effect) |Reads `ctx.root`, calls `wiki.setText()` |

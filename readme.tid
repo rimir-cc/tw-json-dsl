@@ -20,4 +20,4 @@ No external prerequisites.
 
 !! Quick start
 
-Build JSON declaratively: `<$json-obj><$json-prop name="key"><$json-val value="hello"/></$json-prop></$json-obj>`. Use `<$json-emit>` to output the result.
+Build JSON declaratively: `<$json-obj><$json-prop key="name" value="hello"/><$json-emit/></$json-obj>`.

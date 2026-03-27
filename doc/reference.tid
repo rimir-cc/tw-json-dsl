@@ -42,7 +42,7 @@ Sets a key/value pair on the nearest object on the stack.
 
 !! `<$json-val>`
 
-Pushes a value onto the nearest array. Supports child-capture: if a child `<$json-obj>` or `<$json-array>` is nested inside, it captures that as the value.
+Provides a typed scalar value via the capture mechanism. Used inside `<$json-prop>` (child capture mode) to set the property value with explicit type coercion.
 
 |!Attribute |!Default |!Description |
 |`value` |`""` |Literal value |

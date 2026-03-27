@@ -28,10 +28,12 @@ Output: `{"title": "Hello World", "enabled": true}`
 ```
 <$json-obj>
   <$json-prop key="name" value="Alice"/>
-  <$json-obj key="address">
-    <$json-prop key="city" value="Berlin"/>
-    <$json-prop key="zip" value="10115"/>
-  </$json-obj>
+  <$json-prop key="address">
+    <$json-obj>
+      <$json-prop key="city" value="Berlin"/>
+      <$json-prop key="zip" value="10115"/>
+    </$json-obj>
+  </$json-prop>
   <$json-emit/>
 </$json-obj>
 ```
