@@ -1,0 +1,34 @@
+title: $:/plugins/rimir/json-dsl/test/test-iteration-array
+description: json-array iteration mode builds objects per item using $variable
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: IterItem1
+text: Alice
+
++
+title: IterItem2
+text: Bob
+
++
+title: Output
+
+\whitespace trim
+<$json-obj>
+<$json-prop key="people">
+<$json-array filter="IterItem1 IterItem2" variable="person">
+<$json-obj>
+<$json-prop key="name" filter="[<person>get[text]]"/>
+</$json-obj>
+</$json-array>
+</$json-prop>
+<$json-emit indent="0"/>
+</$json-obj>
++
+title: ExpectedResult
+
+<p>{"people":[{"name":"Alice"},{"name":"Bob"}]}</p>
++
+title: Narrative
+
+Tests json-array iteration mode: filter provides items, $variable is set per iteration, child widgets build nested objects.

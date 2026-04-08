@@ -1,0 +1,25 @@
+title: $:/plugins/rimir/json-dsl/test/test-body-capture
+description: json-prop body capture with nested json-obj child
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-obj>
+<$json-prop key="meta">
+<$json-obj>
+<$json-prop key="version" value="1"/>
+<$json-prop key="active" value="true" type="bool"/>
+</$json-obj>
+</$json-prop>
+<$json-emit indent="0"/>
+</$json-obj>
++
+title: ExpectedResult
+
+<p>{"meta":{"version":"1","active":true}}</p>
++
+title: Narrative
+
+Tests json-prop body capture: child json-obj is captured as the property value via the capture stack mechanism.
