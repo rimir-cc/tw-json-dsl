@@ -1,0 +1,17 @@
+title: $:/plugins/rimir/json-dsl/test/test-emit-out-of-context
+description: json-emit outside a json-obj/json-array context emits literal null
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-emit indent="0"/>
++
+title: ExpectedResult
+
+<p>null</p>
++
+title: Narrative
+
+When `$json-emit` is rendered with no enclosing json-builder context (no parent `$json-obj` or `$json-array`), it must produce a valid JSON literal — `null` — instead of crashing or emitting an empty string.

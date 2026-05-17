@@ -1,0 +1,22 @@
+title: $:/plugins/rimir/json-dsl/test/test-emit-indent-fallback
+description: json-emit non-numeric indent attribute falls back to default (2)
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Output
+
+\whitespace trim
+<$json-obj>
+<$json-prop key="a" value="1" type="number"/>
+<$json-emit indent="abc"/>
+</$json-obj>
++
+title: ExpectedResult
+
+<p>{
+  "a": 1
+}</p>
++
+title: Narrative
+
+`indent="abc"` parses to NaN; the widget must fall back to the documented default of 2 spaces instead of producing `NaN`-indented output.

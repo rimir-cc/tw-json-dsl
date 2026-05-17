@@ -1,0 +1,30 @@
+title: $:/plugins/rimir/json-dsl/test/test-array-raw-coercion
+description: json-array scalar mode with type="raw" parses each title as JSON, falling back to the original string
+type: text/vnd.tiddlywiki-multiple
+tags: [[$:/tags/wiki-test-spec]]
+
+title: Setup
+
+42
++
+title: 42
+
++
+title: true
+
++
+title: not-json
+
++
+title: Output
+
+\whitespace trim
+<$json-obj><$json-array filter="42 true not-json" type="raw" key="items"/><$json-emit indent="0"/></$json-obj>
++
+title: ExpectedResult
+
+<p>{"items":[42,true,"not-json"]}</p>
++
+title: Narrative
+
+`type="raw"` runs each scalar through `JSON.parse`; the first two parse as a number and a boolean, while `not-json` falls back to the original string so a malformed entry doesn't break the build.

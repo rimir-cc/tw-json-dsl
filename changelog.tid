@@ -6,6 +6,7 @@ type: text/vnd.tiddlywiki
 ! Changelog
 
 |!Version |!Date |!Changes |
+|v0.1.8 |2026-05-17 |Test coverage push (3 new fixtures): `json-emit` outside any json-builder context emits literal `null`; non-numeric `indent` falls back to 2; `json-array type="raw"` parses each scalar as JSON with a string fallback on parse failure. Coverage 82.6% → 84.5% lines / 84.6% functions / 71.7% branches. Remaining gaps are widget `refresh()` lifecycles and unused `coerceValue` switch cases — both need Playwright/Tier D exercise. |
 |v0.1.7 |2026-04-27 |Declare hard dependent `theme` and `doc-template` as soft-dependent in plugin.info |
 |v0.1.6 |2026-04-08 |Expand test coverage: 14→33 specs (json-save indent, json-debug modes, array iteration, body capture, edge cases) |
 |v0.1.5 |2026-03-27 |Fix doc deviations: readme quick start, json-val/json-obj descriptions, nested object example |
